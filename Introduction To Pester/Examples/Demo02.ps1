@@ -38,6 +38,7 @@ Describe "Testing Get-Share"{
 
     It "[ParameterLess] it should return [String] type"{
         $s = Get-Share 
+        
         $S.Name | should -BeOfType String
         
     }

@@ -1,28 +1,8 @@
 #Mocking
 
-Function Get-NextADComputerName {
-    #Does stuff with AD module
-    Get-ADComputer
-    #Returns computername format: CMP00003
-}
-
-Function New-StagingEntry {
-    [CmdletBinding()]
-    Param(
-
-    )
-
-    $ComputerName = Get-NextADComputerName
-    If($ComputerName){
-        $return = "Staging-" + $ComputerName
-    }else{
-        throw "No computer object"
-    }
-
-    return $return
-}
-
 #Without Mocking
+. "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\Demos\Introduction To Pester\Examples\coverage.ps1"
+
 
 Describe "Testing New-StagingEntry"{
     It "[Parameterless] Should not throw"{
@@ -41,7 +21,7 @@ Describe "Testing New-StagingEntry"{
 #With Mocking
 
 
-Describe "Testing New-StagingEntry"{
+Describe "Testing New-StagingEntry with mocking"{
     Mock -CommandName Get-NextADComputerName -MockWith {"CMP0003"}
     It "[Parameterless] Should not throw"{
         {New-StagingEntry} | should not throw
@@ -52,4 +32,6 @@ Describe "Testing New-StagingEntry"{
         $d | should Match 'Staging-CMP.*$' 
         
     }
+
+    Assert-MockCalled -CommandName Get-NextADComputerName
 }

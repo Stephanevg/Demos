@@ -8,6 +8,7 @@ Describe "Using TestDrive"{
     It "Should contain plop folder."{
         $Testfolder = Join-Path -Path $TestDrive -ChildPath "plop"
         $null = mkdir $Testfolder
+        write-host (Get-Item $Testfolder).FullName
         $TestFolder | should exist
     }
 }
@@ -20,6 +21,7 @@ Describe "Using TestDrive"{
     }
 
     It "Should contain plop folder"{
+        write-host (Get-Item $TestDrive).FullName
         $Testfolder = Join-Path -Path $TestDrive -ChildPath "plop"
         $TestFolder | should exist
     }
